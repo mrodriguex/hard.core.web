@@ -155,12 +155,12 @@ export default function Perfiles() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <main className="max-w-7xl mx-auto p-6">
+    <main className="max-w-7xl mx-auto p-3 sm:p-4 md:p-6">
       {/* ── Toolbar ── */}
-      <div className="flex flex-wrap gap-3 items-center mb-5">
+      <div className="flex flex-wrap gap-2 sm:gap-3 items-center mb-5">
         <button
           onClick={openAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-colors text-sm"
+          className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-colors text-sm"
         >
           + Nuevo Perfil
         </button>
@@ -171,7 +171,7 @@ export default function Perfiles() {
             setFilterActivo(e.target.value === "" ? undefined : e.target.value === "true");
             setPageIndex(1);
           }}
-          className="border border-gray-300 rounded p-2 text-sm bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded p-2 text-sm bg-white"
         >
           <option value="">Todos</option>
           <option value="true">Activos</option>
@@ -181,7 +181,7 @@ export default function Perfiles() {
         <select
           value={pageSize}
           onChange={(e) => { setPageSize(Number(e.target.value)); setPageIndex(1); }}
-          className="border border-gray-300 rounded p-2 text-sm bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded p-2 text-sm bg-white"
         >
           {PAGE_SIZE_OPTIONS.map((n) => (
             <option key={n} value={n}>{n} por página</option>
@@ -191,7 +191,7 @@ export default function Perfiles() {
         <button
           onClick={loadPerfiles}
           disabled={loading}
-          className="ml-auto border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 px-4 py-2 rounded text-sm transition-colors"
+          className="w-full sm:w-auto sm:ml-auto border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 px-4 py-2 rounded text-sm transition-colors"
         >
           ↻ Actualizar
         </button>
@@ -296,9 +296,9 @@ export default function Perfiles() {
 
       {/* ── Pagination ── */}
       {total > 0 && (
-        <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4 text-sm text-gray-600">
           <span>{total} registro{total !== 1 ? "s" : ""} en total</span>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center flex-wrap">
             <button
               disabled={pageIndex === 1}
               onClick={() => setPageIndex((p) => Math.max(1, p - 1))}
@@ -339,7 +339,7 @@ export default function Perfiles() {
             ) : (
               <div className="p-6 space-y-6">
                 {/* Basic info */}
-                <div className="grid grid-cols-2 gap-3 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div>
                     <p className="text-gray-400 text-xs uppercase tracking-wide mb-1">ID</p>
                     <p className="font-medium">{detail.id}</p>
@@ -448,7 +448,7 @@ export default function Perfiles() {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Nombre <span className="text-red-500">*</span>

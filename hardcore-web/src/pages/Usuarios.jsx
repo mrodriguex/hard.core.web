@@ -196,18 +196,18 @@ export default function Usuarios() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <main className="max-w-7xl mx-auto p-6">
+    <main className="max-w-7xl mx-auto p-3 sm:p-4 md:p-6">
 
       {/* ── Toolbar ── */}
-      <div className="flex flex-wrap gap-3 items-center mb-5">
-        <button onClick={openAdd} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-colors text-sm">
+      <div className="flex flex-wrap gap-2 sm:gap-3 items-center mb-5">
+        <button onClick={openAdd} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-colors text-sm">
           + Nuevo Usuario
         </button>
 
         <select
           value={filterActivo === undefined ? "" : String(filterActivo)}
           onChange={(e) => { setFilterActivo(e.target.value === "" ? undefined : e.target.value === "true"); setPageIndex(1); }}
-          className="border border-gray-300 rounded p-2 text-sm bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded p-2 text-sm bg-white"
         >
           <option value="">Todos</option>
           <option value="true">Activos</option>
@@ -217,12 +217,12 @@ export default function Usuarios() {
         <select
           value={pageSize}
           onChange={(e) => { setPageSize(Number(e.target.value)); setPageIndex(1); }}
-          className="border border-gray-300 rounded p-2 text-sm bg-white"
+          className="w-full sm:w-auto border border-gray-300 rounded p-2 text-sm bg-white"
         >
           {PAGE_SIZE_OPTIONS.map((n) => <option key={n} value={n}>{n} por página</option>)}
         </select>
 
-        <button onClick={loadUsuarios} disabled={loading} className="ml-auto border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 px-4 py-2 rounded text-sm transition-colors">
+        <button onClick={loadUsuarios} disabled={loading} className="w-full sm:w-auto sm:ml-auto border border-gray-300 bg-white hover:bg-gray-50 disabled:opacity-50 px-4 py-2 rounded text-sm transition-colors">
           ↻ Actualizar
         </button>
       </div>
@@ -296,9 +296,9 @@ export default function Usuarios() {
 
       {/* ── Pagination ── */}
       {total > 0 && (
-        <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-4 text-sm text-gray-600">
           <span>{total} registro{total !== 1 ? "s" : ""} en total</span>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 items-center flex-wrap">
             <button disabled={pageIndex === 1} onClick={() => setPageIndex((p) => Math.max(1, p - 1))} className="px-3 py-1 border rounded disabled:opacity-40 hover:bg-gray-100 transition-colors">← Anterior</button>
             <span className="px-2">Página {pageIndex} de {totalPages}</span>
             <button disabled={pageIndex >= totalPages} onClick={() => setPageIndex((p) => p + 1)} className="px-3 py-1 border rounded disabled:opacity-40 hover:bg-gray-100 transition-colors">Siguiente →</button>
@@ -343,7 +343,7 @@ export default function Usuarios() {
                 </div>
 
                 {/* Fields */}
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     ["ID", detail.id],
                     ["Nº Empleado", detail.numeroEmpleado || "—"],
@@ -421,7 +421,7 @@ export default function Usuarios() {
               {/* Name section */}
               <div>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Datos personales</p>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Nombre <span className="text-red-500">*</span></label>
                     <input name="nombre" required value={modal.data.nombre} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -452,7 +452,7 @@ export default function Usuarios() {
               {/* Account section */}
               <div>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Cuenta</p>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario <span className="text-red-500">*</span></label>
                     <input name="nombreUsuario" required value={modal.data.nombreUsuario ?? ""} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
