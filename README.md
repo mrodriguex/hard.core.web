@@ -1,118 +1,280 @@
-# hard.core.web
+# HARD.CORE.WEB - Frontend ERP Client (BASE SOURCE CODE)
 
-Frontend web application for HARD.CORE API, built with React + Vite.
+⚠️ **IMPORTANT**: This repository is a **frontend base implementation** for HARD.CORE platform integrations. It is intended as a reusable UI foundation and may require environment-specific customization before production use.
 
-## Repository purpose
+## 📋 Table of Contents
 
-This repository contains the UI layer of the HARD.CORE platform and focuses on:
+- [About This Base Project](#about-this-base-project)
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Project Architecture](#project-architecture)
+- [Folder Structure](#folder-structure)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Build Instructions](#build-instructions)
+- [Running the Application](#running-the-application)
+- [Configuration](#configuration)
+- [API Documentation](#api-documentation)
+- [Deployment](#deployment)
+- [Troubleshooting](#troubleshooting)
+- [Contributing](#contributing)
+- [License](#license)
 
-- Authentication flow (`Login` + token persistence).
-- CRUD administration screens for core entities:
-	- `Empresas`
-	- `Menús`
-	- `Clientes`
-	- `Perfiles`
-	- `Usuarios`
-- Integration with the backend API envelope format:
-	- `{ success, data, message, errors }`
+---
 
-## Repository layout
+## 🎯 About This Base Project
 
-```text
-hard.core.web/
-├── .git/
-├── LICENSE
-├── README.md                  # This file (root documentation)
-└── hardcore-web/              # React application root
-		├── package.json
-		├── vite.config.js
-		├── src/
-		│   ├── App.jsx
-		│   ├── components/
-		│   ├── pages/
-		│   └── services/
-		└── public/
+**HARD.CORE.WEB** is a reusable React-based frontend baseline for enterprise management interfaces connected to HARD.CORE API.
+
+### Purpose of This Base Code
+
+This codebase provides:
+
+- ✅ Authentication flow (login/logout with token persistence)
+- ✅ Responsive admin UI with desktop and mobile navigation
+- ✅ CRUD-ready modules for core entities
+- ✅ Shared service pattern for REST integration
+- ✅ Axios-based token interceptor and envelope unwrapping
+- ✅ Vite-based modern build and deployment flow
+
+### Intended Use
+
+- Template for new frontend projects over HARD.CORE API
+- Reference implementation for service-layer integration patterns
+- Starting point for custom ERP dashboards and modules
+
+### NOT Intended As
+
+- ❌ A complete feature-finished ERP product
+- ❌ A no-customization production package
+- ❌ A backend/API replacement
+
+---
+
+## 🎯 Project Overview
+
+This project is the web presentation layer for HARD.CORE and currently includes UI modules for:
+
+- Empresas
+- Menús
+- Clientes
+- Perfiles
+- Usuarios
+
+The frontend consumes API responses using the envelope contract:
+
+```json
+{
+	"success": true,
+	"data": {},
+	"message": "...",
+	"errors": []
+}
 ```
 
-> Important: the real app root is `hardcore-web/`.
+---
 
-## Tech stack
+## ✨ Features
+
+### Core Functionality
+
+- JWT login and session handling
+- Dynamic section navigation via top navbar
+- Entity list and management flows
+- Basic filtering and pagination patterns
+- Mobile improvements including hamburger navigation
+
+### API Integration Features
+
+- Shared Axios clients per domain service
+- Automatic `Authorization: Bearer <token>` attachment
+- Consistent error extraction from API envelope
+- Modular service files for each domain entity
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend
 
 - React 19
 - Vite 8
-- Axios
 - TailwindCSS 4
-- ESLint 9
+- Axios
 
-## Prerequisites
+### Tooling
 
 - Node.js 20+
 - npm 10+
+- ESLint 9
 
-## Quick start
+---
 
-From repository root:
+## 🏗️ Project Architecture
+
+### Layered Frontend Structure
+
+```
+┌──────────────────────────────────────────────┐
+│ UI Layer                                     │
+│ (pages, components, visual state)            │
+└──────────────────────────────────────────────┘
+											↓
+┌──────────────────────────────────────────────┐
+│ App State / Session Layer                    │
+│ (App.jsx, login gate, navigation state)      │
+└──────────────────────────────────────────────┘
+											↓
+┌──────────────────────────────────────────────┐
+│ Service Layer                                │
+│ (authService + entity services with Axios)   │
+└──────────────────────────────────────────────┘
+											↓
+┌──────────────────────────────────────────────┐
+│ HARD.CORE API                                │
+│ (REST endpoints v1)                          │
+└──────────────────────────────────────────────┘
+```
+
+### Module Descriptions
+
+- `src/App.jsx`: auth gate and current section routing
+- `src/components/Navbar.jsx`: responsive menu + logout
+- `src/pages/*`: feature pages per entity
+- `src/services/*`: API communication and envelope handling
+
+---
+
+## 📁 Folder Structure
+
+```text
+hard.core.web/
+├── LICENSE
+├── README.md
+├── docs/                            # static published output (if used)
+├── hardcore-mobile/                 # optional mobile client (Expo)
+└── hardcore-web/                    # main React web application
+		├── package.json
+		├── vite.config.js
+		├── public/
+		└── src/
+				├── App.jsx
+				├── components/
+				├── pages/
+				└── services/
+```
+
+---
+
+## 📋 Prerequisites
+
+- Node.js 20 or later
+- npm 10 or later
+- Access to HARD.CORE API endpoint
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/mrodriguex/hard.core.web.git
+cd hard.core.web/hardcore-web
+npm install
+```
+
+---
+
+## 🔨 Build Instructions
 
 ```bash
 cd hardcore-web
-npm install
+npm run lint
+npm run build
+```
+
+Build artifacts are generated in `hardcore-web/dist`.
+
+---
+
+## 🚀 Running the Application
+
+```bash
+cd hardcore-web
 npm run dev
 ```
 
-Default local URL:
+Default URL:
 
 - `http://localhost:5173`
 
-## Available scripts
+Preview production build locally:
 
-Run inside `hardcore-web/`:
+```bash
+npm run preview
+```
 
-- `npm run dev` → start dev server
-- `npm run build` → production build
-- `npm run preview` → preview production build
-- `npm run lint` → lint source code
+---
 
-## Application architecture
+## ⚙️ Configuration
 
-### 1) UI and navigation
+### API Base URL
 
-- `src/App.jsx` controls session state and active section.
-- `src/components/Navbar.jsx` provides section navigation and logout.
-- `src/pages/*` contains entity-specific views.
+Current service files target:
 
-### 2) Service layer
+- `https://hardcoreapi.hookhub.app`
 
-- `src/services/authService.js` handles login, token storage, and logout.
-- `src/services/*Service.js` files encapsulate API calls by entity.
-- Each service:
-	- Uses Axios instance with API base URL.
-	- Injects `Authorization: Bearer <token>` via interceptor.
-	- Unwraps the backend envelope and throws on `success: false`.
+Recommended enhancement:
 
-### 3) Auth model
+- Move base URL to env config (`VITE_API_URL`) for multi-environment deploys.
 
-- JWT token is persisted in `localStorage` under key `token`.
-- `logout()` removes local token.
-- Current UI gate is local-state based (`loggedIn` state in `App.jsx`).
+### Authentication
 
-## API integration notes
+- Token key in browser storage: `token`
+- Header used: `Authorization: Bearer {token}`
 
-- Base URL currently hardcoded in service files:
-	- `https://hardcoreapi.hookhub.app`
-- Login endpoint:
-	- `POST /api/v1/Auth/login`
-- Main domain endpoints follow:
-	- `GET /api/v1/<Entity>/GetAll`
-	- `GET /api/v1/<Entity>/GetById`
-	- `POST /api/v1/<Entity>/Add`
-	- `PUT /api/v1/<Entity>/Update`
-	- `DELETE /api/v1/<Entity>/Delete`
+---
 
-## Debugging guide
+## 📚 API Documentation
 
-### Frequent issue: `ENOENT: uv_cwd`
+### Authentication Endpoint
 
-Cause: terminal is located in a deleted directory.
+- `POST /api/v1/Auth/login`
+
+### Common Entity Endpoints
+
+- `GET /api/v1/<Entity>/GetAll`
+- `GET /api/v1/<Entity>/GetById`
+- `POST /api/v1/<Entity>/Add`
+- `PUT /api/v1/<Entity>/Update`
+- `DELETE /api/v1/<Entity>/Delete`
+
+Entities implemented in UI:
+
+- Empresa, Menu, Cliente, Perfil, Usuario
+
+---
+
+## 🚢 Deployment
+
+### Web Build Deployment
+
+```bash
+cd hardcore-web
+npm run build
+```
+
+Deploy contents of `dist/` to your static hosting platform.
+
+If publishing to repository docs site, copy generated output to `docs/` according to your release workflow.
+
+---
+
+## 🐛 Troubleshooting
+
+### 1) `ENOENT: uv_cwd`
+
+Cause: terminal still points to a deleted directory.
 
 Fix:
 
@@ -121,64 +283,43 @@ cd ~/Documentos/Development/DevOps/hard.core.web/hardcore-web
 npm run dev
 ```
 
-### Port already in use
-
-- Stop the previous Vite process or run on another port:
+### 2) Port already in use
 
 ```bash
 npm run dev -- --port 5174
 ```
 
-### API/auth issues
+### 3) API unauthorized errors
 
-- Open browser DevTools → Network tab.
-- Verify `Authorization` header is present on protected routes.
-- Confirm login response contains `success: true` and token in `data`.
+- Verify token exists in storage
+- Confirm `Authorization` header is present
+- Validate login response includes token in `data`
 
-## Build and release
+---
 
-```bash
-cd hardcore-web
-npm run lint
-npm run build
-npm run preview
-```
+## 👥 Contributing
 
-Build output is generated in `hardcore-web/dist/`.
+1. Fork the repository
+2. Create branch: `feature/<name>` or `fix/<name>`
+3. Keep changes focused and documented
+4. Run lint and build before PR
+5. Open PR with context and screenshots for UI changes
 
-## Contribution guidelines
+---
 
-1. Create a feature branch from `main`.
-2. Keep PRs focused (single concern).
-3. Run lint and build before opening PR.
-4. Include screenshots for UI-impacting changes.
-5. Document API contract changes in the PR description.
+## 📄 License
 
-Recommended branch naming:
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
-- `feature/<short-name>`
-- `fix/<short-name>`
-- `chore/<short-name>`
+---
 
-## Maintenance notes
+## 📞 Support & Contact
 
-- Keep dependencies current (`npm outdated`).
-- Prefer centralizing API base URL in environment variables (`VITE_API_URL`) for multi-environment deployments.
-- Consider consolidating duplicated Axios setup into a shared API client module.
-- Review token handling and add route guards if protected routes grow.
+- Repository owner: Manuel Rodríguez
+- Main repository: https://github.com/mrodriguex/hard.core.web
 
-## Security considerations
+---
 
-- Do not commit secrets in source files.
-- Prefer environment variables for sensitive/variable configuration.
-- Validate backend error handling to avoid exposing internal messages in UI.
-
-## License
-
-This project is distributed under the MIT License. See `LICENSE`.
-
-## Maintainer
-
-- Repository owner / core maintainer: Manuel Rodríguez
-
-If you plan larger architectural changes, open an issue first with context, goals, and migration impact.
+**Project Type**: Frontend BASE SOURCE CODE
+**Maintained By**: Manuel Rodríguez
+**Status**: Active
