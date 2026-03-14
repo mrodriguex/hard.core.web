@@ -6,6 +6,7 @@ import Clientes from "./pages/Clientes";
 import Perfiles from "./pages/Perfiles";
 import Usuarios from "./pages/Usuarios";
 import Navbar from "./components/Navbar";
+import ApkDownloadButton from "./components/ApkDownloadButton";
 import { logout } from "./services/authService";
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
       {page === "clientes" && <Clientes />}
       {page === "perfiles" && <Perfiles />}
       {page === "usuarios" && <Usuarios />}
+      <ApkDownloadButton />
     </div>
   );
 }
