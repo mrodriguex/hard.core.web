@@ -13,7 +13,7 @@ function asArray(value) {
  */
 export function normalizePaginatedResult(payload, defaults = {}) {
   const defaultPageIndex = defaults.pageIndex ?? 1;
-  const defaultPageSize = defaults.pageSize ?? 10;
+  const defaultPageSize = defaults.pageSize ?? 20;
 
   if (Array.isArray(payload)) {
     return {

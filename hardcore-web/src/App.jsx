@@ -7,10 +7,10 @@ import Perfiles from "./pages/Perfiles";
 import Usuarios from "./pages/Usuarios";
 import Navbar from "./components/Navbar";
 import ApkDownloadButton from "./components/ApkDownloadButton";
-import { logout } from "./services/authService";
+import { isAuthenticated, logout } from "./services/authService";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(isAuthenticated());
   const [page, setPage] = useState("empresas");
 
   function handleLogout() {

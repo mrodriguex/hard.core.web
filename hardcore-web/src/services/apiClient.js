@@ -18,6 +18,12 @@ export function setAuthToken(token) {
   }
 }
 
+// bootstrap existing session
+const token = localStorage.getItem('token');
+if (token) {
+  setAuthToken(token);
+}
+
 export function unwrap(response) {
   const { success, data, message } = response.data ?? {};
   if (!success) {
