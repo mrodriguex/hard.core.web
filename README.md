@@ -222,7 +222,7 @@ npm run preview
 
 Current service files target:
 
-- `https://hardcoreapi.hookhub.app`
+- `https://localhost:7026`
 
 Recommended enhancement:
 

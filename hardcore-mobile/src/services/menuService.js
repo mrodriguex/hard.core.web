@@ -1,10 +1,11 @@
 import { apiClient, unwrap } from './apiClient';
+import { normalizePaginatedResult } from './pagination';
 
 export async function getAll({ activo, pageIndex = 1, pageSize = 20 } = {}) {
   const params = { pageIndex, pageSize };
   if (activo !== undefined) params.activo = activo;
   const response = await apiClient.get('/api/v1/Menu/GetAll', { params });
-  return unwrap(response);
+  return normalizePaginatedResult(unwrap(response), { pageIndex, pageSize });
 }
 
 export async function getById(idMenu) {

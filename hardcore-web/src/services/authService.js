@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "https://hardcoreapi.hookhub.app";
+const API = "https://localhost:7026";
 
 const apiClient = axios.create({
   baseURL: API,

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getToken } from "./authService";
+import { normalizePaginatedResult } from "./pagination";
 
-const API = "https://hardcoreapi.hookhub.app";
+const API = "https://localhost:7026";
 
 const apiClient = axios.create({ baseURL: API });
 
@@ -22,7 +23,7 @@ export async function getAll({ activo, pageIndex = 1, pageSize = 10 } = {}) {
   const params = { pageIndex, pageSize };
   if (activo !== undefined) params.activo = activo;
   const res = await apiClient.get("/api/v1/Usuario/GetAll", { params });
-  return unwrap(res);
+  return normalizePaginatedResult(unwrap(res), { pageIndex, pageSize });
 }
 
 /** GET /api/v1/Usuario/GetById?idUsuario= */

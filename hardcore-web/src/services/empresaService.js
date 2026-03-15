@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getToken } from "./authService";
+import { normalizePaginatedResult } from "./pagination";
 
-const API = "https://hardcoreapi.hookhub.app";
+const API = "https://localhost:7026";
 
 const apiClient = axios.create({ baseURL: API });
 
@@ -27,7 +28,7 @@ export async function getAll({ activo, pageIndex = 1, pageSize = 10 } = {}) {
   const params = { pageIndex, pageSize };
   if (activo !== undefined) params.activo = activo;
   const res = await apiClient.get("/api/v1/Empresa/GetAll", { params });
-  return unwrap(res);
+  return normalizePaginatedResult(unwrap(res), { pageIndex, pageSize });
 }
 
 /**
@@ -64,6 +65,14 @@ export async function update(empresa) {
 export async function remove(idEmpresa) {
   const res = await apiClient.delete("/api/v1/Empresa/Delete", {
     params: { idEmpresa },
+  });
+  return unwrap(res);
+}
+
+/** GET /api/v1/Empresa/GetCompaniesByUser?idUsuario= */
+export async function getCompaniesByUser(idUsuario) {
+  const res = await apiClient.get("/api/v1/Empresa/GetCompaniesByUser", {
+    params: { idUsuario },
   });
   return unwrap(res);
 }

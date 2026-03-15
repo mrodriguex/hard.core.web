@@ -64,6 +64,6 @@ hardcore-mobile/
 
 ## Notes
 
-- API base URL is currently `https://hardcoreapi.hookhub.app`.
+- API base URL is currently `https://localhost:7026`.
 - You can move it to env config later if needed.
 - Current screens are list-oriented (optimized for mobile browsing); CRUD forms can be added incrementally.

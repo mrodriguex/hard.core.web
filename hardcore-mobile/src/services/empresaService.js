@@ -1,9 +1,17 @@
 import { apiClient, unwrap } from './apiClient';
+import { normalizePaginatedResult } from './pagination';
 
 export async function getAll({ activo, pageIndex = 1, pageSize = 20 } = {}) {
   const params = { pageIndex, pageSize };
   if (activo !== undefined) params.activo = activo;
   const response = await apiClient.get('/api/v1/Empresa/GetAll', { params });
+  return normalizePaginatedResult(unwrap(response), { pageIndex, pageSize });
+}
+
+export async function getCompaniesByUser(idUsuario) {
+  const response = await apiClient.get('/api/v1/Empresa/GetCompaniesByUser', {
+    params: { idUsuario },
+  });
   return unwrap(response);
 }
 
