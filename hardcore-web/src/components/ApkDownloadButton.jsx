@@ -1,4 +1,4 @@
-const APK_URL = 'https://expo.dev/artifacts/eas/n5bVyfnH8hGGfTHs6dncUr.apk';
+const APK_URL = 'https://expo.dev/artifacts/eas/xyhKeK4aMzEWaCChAaHSy4.apk';
 
 export default function ApkDownloadButton() {
   return (
