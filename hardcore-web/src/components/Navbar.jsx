@@ -6,6 +6,7 @@ const NAV_ITEMS = [
   { key: "clientes", label: "Clientes" },
   { key: "perfiles", label: "Perfiles" },
   { key: "usuarios", label: "Usuarios" },
+  { key: "mensajes", label: "Mensajes" },
 ];
 
 export default function Navbar({ page, onNavigate, onLogout }) {
