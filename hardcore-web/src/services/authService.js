@@ -1,11 +1,13 @@
 import { apiClient, normalizeApiError, setAuthToken } from './apiClient';
 
 const TOKEN_KEY = 'token';
+const USERNAME_KEY = 'username';
 
 export async function login(username, password) {
   try {
+    const cleanUsername = username?.trim() ?? '';
     const response = await apiClient.post('/api/v1/Auth/login', {
-      username,
+      username: cleanUsername,
       password,
     });
 
@@ -23,6 +25,9 @@ export async function login(username, password) {
     }
 
     localStorage.setItem(TOKEN_KEY, token);
+    if (cleanUsername) {
+      localStorage.setItem(USERNAME_KEY, cleanUsername);
+    }
     setAuthToken(token);
     return { success: true, token };
   } catch (error) {
@@ -35,11 +40,16 @@ export async function login(username, password) {
 
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USERNAME_KEY);
   setAuthToken(null);
 }
 
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
+}
+
+export function getUsername() {
+  return localStorage.getItem(USERNAME_KEY);
 }
 
 export function isAuthenticated() {

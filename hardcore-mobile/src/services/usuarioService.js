@@ -45,9 +45,8 @@ export async function unlockUser(idUsuario) {
 }
 
 export async function updatePassword(username, password) {
-  const response = await apiClient.put('/api/v1/Usuario/UpdatePassword', {
-    username,
-    password,
+  const response = await apiClient.put('/api/v1/Usuario/UpdatePassword', null, {
+    params: { username: String(username), password },
   });
   return unwrap(response);
 }

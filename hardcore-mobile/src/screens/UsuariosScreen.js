@@ -8,7 +8,7 @@ export default function UsuariosScreen() {
       title="Usuarios"
       fetchItems={usuarioService.getAll}
       getPrimaryText={(item) => item?.nombreCompleto || item?.nombre || 'Sin nombre'}
-      getSecondaryText={(item) => item?.correo || item?.nombreUsuario || ''}
+      getSecondaryText={(item) => item?.correo || item?.claveUsuario || item?.nombreUsuario || ''}
       getStatus={(item) => (item?.bloqueado ? 'Bloqueado' : item?.activo ? 'Activo' : 'Inactivo')}
     />
   );

@@ -8,6 +8,7 @@ const emptyForm = {
   nombre: "",
   abreviatura: "",
   descripcion: "",
+  claveUsuario: "",
   nombreUsuario: "",
   apellidoPaterno: "",
   apellidoMaterno: "",
@@ -21,6 +22,34 @@ const emptyForm = {
   cambioContrasena: false,
   idUsuarioPorAusencia: "",
 };
+
+function normalizeUsuario(raw = {}) {
+  return {
+    ...raw,
+    id: raw.id ?? raw.idUsuario ?? raw.Id ?? raw.IdUsuario ?? 0,
+    nombre: raw.nombre ?? raw.Nombre ?? "",
+    nombreCompleto: raw.nombreCompleto ?? raw.NombreCompleto ?? "",
+    abreviatura: raw.abreviatura ?? raw.Abreviatura ?? "",
+    descripcion: raw.descripcion ?? raw.Descripcion ?? "",
+    claveUsuario: raw.claveUsuario ?? raw.ClaveUsuario ?? "",
+    nombreUsuario: raw.nombreUsuario ?? raw.NombreUsuario ?? "",
+    apellidoPaterno: raw.apellidoPaterno ?? raw.ApellidoPaterno ?? "",
+    apellidoMaterno: raw.apellidoMaterno ?? raw.ApellidoMaterno ?? "",
+    correo: raw.correo ?? raw.Correo ?? "",
+    numeroEmpleado: raw.numeroEmpleado ?? raw.NumeroEmpleado ?? 0,
+    orden: raw.orden ?? raw.Orden ?? 0,
+    activo: raw.activo ?? raw.Activo ?? false,
+    estatus: raw.estatus ?? raw.Estatus ?? false,
+    bloqueado: raw.bloqueado ?? raw.Bloqueado ?? false,
+    cambioContrasena: raw.cambioContrasena ?? raw.CambioContrasena ?? false,
+    idUsuarioPorAusencia:
+      raw.idUsuarioPorAusencia ?? raw.IdUsuarioPorAusencia ?? "",
+    numeroIntentos: raw.numeroIntentos ?? raw.NumeroIntentos ?? 0,
+    fotografia: raw.fotografia ?? raw.Fotografia ?? "",
+    perfiles: raw.perfiles ?? raw.Perfiles ?? [],
+    empresas: raw.empresas ?? raw.Empresas ?? [],
+  };
+}
 
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -58,10 +87,10 @@ export default function Usuarios() {
     try {
       const result = await usuarioService.getAll({ activo: filterActivo, pageIndex, pageSize });
       if (Array.isArray(result)) {
-        setUsuarios(result);
+        setUsuarios(result.map((u) => normalizeUsuario(u)));
         setTotal(result.length);
       } else if (result?.items) {
-        setUsuarios(result.items);
+        setUsuarios(result.items.map((u) => normalizeUsuario(u)));
         setTotal(result.total ?? result.items.length);
       } else {
         setUsuarios([]);
@@ -78,11 +107,11 @@ export default function Usuarios() {
 
   // ── Detail drawer ─────────────────────────────────────────────────────────
   async function openDetail(u) {
-    setDetail({ ...u });
+    setDetail(normalizeUsuario(u));
     setDetailLoading(true);
     try {
       const full = await usuarioService.getById(u.id);
-      setDetail(full);
+      setDetail(normalizeUsuario(full));
     } catch { /* fall back to list data */ }
     finally { setDetailLoading(false); }
   }
@@ -104,13 +133,25 @@ export default function Usuarios() {
     setModalError("");
   }
 
-  function openEdit(u) {
+  async function openEdit(u) {
+    const fallback = normalizeUsuario(u);
+    let source = fallback;
+
+    try {
+      const full = await usuarioService.getById(fallback.id);
+      source = normalizeUsuario(full);
+    } catch {
+      // Fallback to row data if full payload can't be loaded.
+    }
+
     setModal({
       open: true, mode: "edit",
       data: {
-        ...u,
+        ...emptyForm,
+        ...source,
+        claveUsuario: source.claveUsuario ?? "",
         contrasena: "",
-        idUsuarioPorAusencia: u.idUsuarioPorAusencia ?? "",
+        idUsuarioPorAusencia: source.idUsuarioPorAusencia ?? "",
       },
     });
     setModalError("");
@@ -157,7 +198,7 @@ export default function Usuarios() {
 
   // ── Change password modal ─────────────────────────────────────────────────
   function openPwdModal(u) {
-    setPwdModal({ open: true, username: u.nombreUsuario ?? u.claveUsuario ?? "", password: "", confirm: "", saving: false, error: "" });
+    setPwdModal({ open: true, username: u.claveUsuario ?? u.nombreUsuario ?? "", password: "", confirm: "", saving: false, error: "" });
   }
 
   async function handlePwdSave(e) {
@@ -258,7 +299,7 @@ export default function Usuarios() {
                     <div className="font-medium text-gray-900">{u.nombreCompleto || `${u.nombre ?? ""}`}</div>
                     <div className="text-xs text-gray-400">{u.apellidoPaterno} {u.apellidoMaterno}</div>
                   </td>
-                  <td className="px-4 py-3 text-gray-600 font-mono text-xs">{u.nombreUsuario ?? u.claveUsuario}</td>
+                  <td className="px-4 py-3 text-gray-600 font-mono text-xs">{u.claveUsuario ?? u.nombreUsuario}</td>
                   <td className="px-4 py-3 text-gray-600">{u.correo}</td>
                   <td className="px-4 py-3 text-gray-600 text-center">{u.numeroEmpleado || <span className="text-gray-300">—</span>}</td>
                   <td className="px-4 py-3">
@@ -330,7 +371,7 @@ export default function Usuarios() {
                   )}
                   <div>
                     <p className="font-bold text-lg">{detail.nombreCompleto || detail.nombre}</p>
-                    <p className="text-gray-400 font-mono">{detail.nombreUsuario ?? detail.claveUsuario}</p>
+                    <p className="text-gray-400 font-mono">{detail.claveUsuario ?? detail.nombreUsuario}</p>
                     <p className="text-gray-500">{detail.correo}</p>
                   </div>
                 </div>
@@ -346,6 +387,7 @@ export default function Usuarios() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {[
                     ["ID", detail.id],
+                    ["Clave de usuario", detail.claveUsuario || "—"],
                     ["Nº Empleado", detail.numeroEmpleado || "—"],
                     ["Apellido Paterno", detail.apellidoPaterno || "—"],
                     ["Apellido Materno", detail.apellidoMaterno || "—"],
@@ -454,16 +496,21 @@ export default function Usuarios() {
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Cuenta</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario <span className="text-red-500">*</span></label>
-                    <input name="nombreUsuario" required value={modal.data.nombreUsuario ?? ""} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Clave de usuario <span className="text-red-500">*</span></label>
+                    <input name="claveUsuario" required value={modal.data.claveUsuario ?? ""} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Contraseña {modal.mode === "add" && <span className="text-red-500">*</span>}
-                      {modal.mode === "edit" && <span className="text-gray-400 font-normal">(vacío = sin cambio)</span>}
-                    </label>
-                    <input name="contrasena" type="password" required={modal.mode === "add"} value={modal.data.contrasena ?? ""} onChange={handleFormChange} autoComplete="new-password" className="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nombre de usuario</label>
+                    <input name="nombreUsuario" value={modal.data.nombreUsuario ?? ""} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-blue-500" />
                   </div>
+                  {modal.mode === "add" && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Contraseña <span className="text-red-500">*</span>
+                    </label>
+                    <input name="contrasena" type="password" required value={modal.data.contrasena ?? ""} onChange={handleFormChange} autoComplete="new-password" className="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  </div>
+                  )}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Orden</label>
                     <input name="orden" type="number" min={0} value={modal.data.orden ?? 0} onChange={handleFormChange} className="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />

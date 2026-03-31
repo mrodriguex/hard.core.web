@@ -1,14 +1,25 @@
 import * as signalR from "@microsoft/signalr";
-import { getToken } from "./authService";
+import { getToken, getUsername } from "./authService";
 import { env } from "../config";
 
 let connection = null;
+
+function buildHubUrl() {
+  const hubUrl = new URL(env.signalrHubUrl, window.location.origin);
+  const username = getUsername()?.trim();
+
+  if (username) {
+    hubUrl.searchParams.set("userName", username);
+  }
+
+  return hubUrl.toString();
+}
 
 export function getDataHubConnection() {
   if (connection) return connection;
 
   connection = new signalR.HubConnectionBuilder()
-    .withUrl(env.signalrHubUrl, {
+    .withUrl(buildHubUrl(), {
       accessTokenFactory: () => getToken() || "",
       withCredentials: false,
       transport: signalR.HttpTransportType.WebSockets,
@@ -30,8 +41,14 @@ export async function startDataHub() {
 
 export async function stopDataHub() {
   if (!connection) return;
-  if (connection.state !== signalR.HubConnectionState.Disconnected) {
-    await connection.stop();
+
+  try {
+    if (connection.state !== signalR.HubConnectionState.Disconnected) {
+      await connection.stop();
+    }
+  } finally {
+    // Force a fresh connection instance so URL/query params are rebuilt per login.
+    connection = null;
   }
 }
 
