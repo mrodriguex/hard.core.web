@@ -1,14 +1,258 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hardcore-web</title>
-    <script type="module" crossorigin src="./assets/index-DYLx7kD3.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index--q-9hCst.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+    <title>HARD.CORE.WEB – Frontend ERP Client</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <button class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#tech" class="nav-link">Tech Stack</a>
+                <a href="#usage" class="nav-link">Usage</a>
+                <a href="#api" class="nav-link">API</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" style="background:linear-gradient(90deg,#1e293b 0%,#0ea5e9 100%);color:#fff;">
+        <div class="hero-content">
+            <img src="assets/images/favicon.png" alt="HARD.CORE.WEB Logo" class="avatar">
+            <h1>HARD.CORE.WEB</h1>
+            <p class="subtitle">
+                React-based ERP Frontend for HARD.CORE Platform Integrations
+            </p>
+            <div class="hero-links">
+                <a href="https://github.com/mrodriguex/hard.core.web/blob/main/README.md" target="_blank">README</a>
+                <a href="https://github.com/mrodriguex/hard.core.web" target="_blank">GitHub</a>
+                <a href="#api">API Docs</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section" id="about">
+            <div class="live-demo-banner"
+                style="background:linear-gradient(90deg,#0ea5e9 0%,#1e293b 100%);color:#fff;padding:1.1rem 1.5rem 1.1rem 1.5rem;border-radius:12px;margin-bottom:2.2rem;box-shadow:0 2px 12px rgba(14,165,233,0.10);font-size:1.13rem;">
+                <strong>Live Demo:</strong>
+                A probe version is published at
+                <a href="https://mrodriguex.github.io/hard.core.web/publish" target="_blank"
+                    style="color:#fff;text-decoration:underline;font-weight:600;">https://mrodriguex.github.io/hard.core.web/publish</a>
+            </div>
+            <h2>About</h2>
+            <p>
+                <strong>HARD.CORE.WEB</strong> is a reusable React-based frontend base for web projects that connect to
+                the HARD.CORE API. It is not a full ERP, but a starting point for custom admin panels, dashboards, or
+                management UIs, providing authentication, responsive admin UI, CRUD-ready modules, and a modern build
+                flow.
+            </p>
+        </section>
+
+        <section class="section" id="features">
+            <h2>Features</h2>
+            <ul>
+                <li>JWT authentication and session handling</li>
+                <li>Responsive admin UI (desktop/mobile)</li>
+                <li>CRUD-ready modules: Empresas, Menús, Clientes, Perfiles, Usuarios, <strong>Mensajes</strong> (with
+                    real-time messaging via SignalR client)</li>
+                <li>Shared Axios service pattern for REST API</li>
+                <li>Token persistence and automatic header injection</li>
+                <li>Envelope-based API response handling</li>
+                <li>Modern Vite-based build and deploy flow</li>
+                <li>Mobile client available (Expo/React Native)</li>
+            </ul>
+        </section>
+
+        <section class="section" id="tech">
+            <h2>Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <p>React 19, Vite 8, TailwindCSS 4, Axios</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Mobile</h3>
+                    <p>Expo (React Native), React Navigation, AsyncStorage</p>
+                </div>
+                <div class="skill-category">
+                    <h3>Tooling</h3>
+                    <p>Node.js 20+, npm 10+, ESLint 9</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="usage">
+            <h2>Usage</h2>
+            <h3 style="margin-bottom:1.2rem;">Web App</h3>
+            <ul>
+                <li><strong>Install:</strong> <code>git clone https://github.com/mrodriguex/hard.core.web.git</code>
+                </li>
+                <li><strong>Setup:</strong> <code>cd hard.core.web/hardcore-web &amp;&amp; npm install</code></li>
+                <li><strong>Run:</strong> <code>npm run dev</code> (default: <code>http://localhost:5173</code>)</li>
+                <li><strong>Build:</strong> <code>npm run build</code> (output: <code>dist/</code>)</li>
+                <li><strong>Preview:</strong> <code>npm run preview</code></li>
+                <li><strong>Available modules:</strong> Empresas, Menús, Clientes, Perfiles, Usuarios,
+                    <strong>Mensajes</strong></li>
+            </ul>
+
+
+            <div class="usage-gallery">
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_login.png" alt="Login" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Login:</strong> User authentication with JWT and session management.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_usuarios_password.png" alt="Usuarios Password Change" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Usuarios:</strong> Password change functionality for users.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_empresas_catalog.png" alt="Empresas Catalog" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Empresas:</strong> Catalog view of all companies.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_empresas_edit.png" alt="Empresas Edit" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Empresas:</strong> Edit company details.</figcaption>
+                </figure>                
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_menus_catalog.png" alt="Menús Catalog" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Menús:</strong> Catalog view of all menus.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_menus_edit.png" alt="Menús Edit" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Menús:</strong> Edit menu details.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_clientes_catalog.png" alt="Clientes Catalog" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Clientes:</strong> Catalog view of all clients.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_clientes_edit.png" alt="Clientes Edit" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Clientes:</strong> Edit client details.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_perfiles_catalog.png" alt="Perfiles Catalog" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Perfiles:</strong> Catalog view of all profiles.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_perfiles_edit.png" alt="Perfiles Edit" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Perfiles:</strong> Edit profile details.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_perfiles_preview.png" alt="Perfiles Preview" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Perfiles:</strong> Preview profile information.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_usuarios_catalog.png" alt="Usuarios Catalog" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Usuarios:</strong> Catalog view of all users.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_usuarios_edit.png" alt="Usuarios Edit" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Usuarios:</strong> Edit user details.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_usuarios_preview.png" alt="Usuarios Preview" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Usuarios:</strong> Preview user information.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_mensajes_broadcast.png" alt="Mensajes Broadcast" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Mensajes:</strong> Broadcast messaging to all users in real time.</figcaption>
+                </figure>
+                <figure class="gallery-figure card">
+                    <div class="img-wrapper">
+                        <img src="assets/images/ui_mensajes_user.png" alt="Mensajes Specific User" class="gallery-img-responsive" />
+                    </div>
+                    <figcaption><strong>Mensajes:</strong> Send messages to specific users in real time.</figcaption>
+                </figure>
+            </div>
+
+
+            <h3 style="margin-bottom:1.2rem;">Mobile App</h3>
+            <ul>
+                <li><strong>Install:</strong> <code>cd hardcore-mobile &amp;&amp; npm install</code></li>
+                <li><strong>Run:</strong> <code>npm run start</code> (open with Expo Go or emulator)</li>
+            </ul>
+            <h3 style="margin-bottom:1.2rem;">Configuration</h3>
+            <ul>
+                <li>API base URL: <code>https://localhost:7026</code> (move to <code>VITE_API_URL</code> for multi-env)
+                </li>
+                <li>Token key: <code>token</code> (browser storage)</li>
+                <li>Authorization header: <code>Authorization: Bearer {'{token}'}</code></li>
+            </ul>
+
+            <section class="section" id="api">
+                <h2>API Overview</h2>
+                <p>Key endpoints:</p>
+                <ul>
+                    <li><strong>Login:</strong> <code>POST /api/v1/Auth/login</code></li>
+                    <li><strong>Get All Entities:</strong> <code>GET /api/v1/&lt;Entity&gt;/GetAll</code></li>
+                    <li><strong>Get By Id:</strong> <code>GET /api/v1/&lt;Entity&gt;/GetById</code></li>
+                    <li><strong>Add:</strong> <code>POST /api/v1/&lt;Entity&gt;/Add</code></li>
+                    <li><strong>Update:</strong> <code>PUT /api/v1/&lt;Entity&gt;/Update</code></li>
+                    <li><strong>Delete:</strong> <code>DELETE /api/v1/&lt;Entity&gt;/Delete</code></li>
+                </ul>
+                <p>Entities: Empresa, Menu, Cliente, Perfil, Usuario, <strong>Mensajes</strong></p>
+                <p>See <a href="https://github.com/mrodriguex/hard.core.web/blob/main/README.md"
+                        target="_blank">README</a> for request/response examples.</p>
+            </section>
+
+            <section class="section" id="contact">
+                <h2>Contact</h2>
+                <p>Maintainer: Manuel Rodríguez Camacho</p>
+                <p>
+                    <a href="https://github.com/mrodriguex" target="_blank">GitHub</a> |
+                    <a href="https://www.linkedin.com/in/manuel-rodriguez-camacho/" target="_blank">LinkedIn</a>
+                </p>
+            </section>
+    </main>
+
+    <footer>
+        <p>© <span id="year"></span> HARD.CORE.WEB</p>
+        <footer class="footer">
+            <p>&copy; 2026 HARD.CORE.WEB. All rights reserved.</p>
+        </footer>
+</body>
+
 </html>

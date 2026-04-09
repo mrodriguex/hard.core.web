@@ -1,6 +1,7 @@
-# HARD.CORE.WEB - Frontend ERP Client (BASE SOURCE CODE)
 
-⚠️ **IMPORTANT**: This repository is a **frontend base implementation** for HARD.CORE platform integrations. It is intended as a reusable UI foundation and may require environment-specific customization before production use.
+# HARD.CORE.WEB - React Frontend Base (NOT an ERP)
+
+⚠️ **IMPORTANT**: This repository is a **frontend base implementation** for HARD.CORE platform integrations. It is intended as a reusable UI foundation for React-based web projects, not a full ERP. It may require environment-specific customization before production use.
 
 ## 📋 Table of Contents
 
@@ -25,7 +26,7 @@
 
 ## 🎯 About This Base Project
 
-**HARD.CORE.WEB** is a reusable React-based frontend baseline for enterprise management interfaces connected to HARD.CORE API.
+**HARD.CORE.WEB** is a reusable React-based frontend base for web projects that connect to the HARD.CORE API. It is not a full ERP, but a starting point for custom admin panels, dashboards, or management UIs.
 
 ### Purpose of This Base Code
 
@@ -33,16 +34,16 @@ This codebase provides:
 
 - ✅ Authentication flow (login/logout with token persistence)
 - ✅ Responsive admin UI with desktop and mobile navigation
-- ✅ CRUD-ready modules for core entities
+- ✅ CRUD-ready modules for core entities (Empresas, Menús, Clientes, Perfiles, Usuarios, **Mensajes**)
 - ✅ Shared service pattern for REST integration
 - ✅ Axios-based token interceptor and envelope unwrapping
 - ✅ Vite-based modern build and deployment flow
 
 ### Intended Use
 
-- Template for new frontend projects over HARD.CORE API
+- Template for new React frontend projects over HARD.CORE API
 - Reference implementation for service-layer integration patterns
-- Starting point for custom ERP dashboards and modules
+- Starting point for custom admin panels, dashboards, or management modules
 
 ### NOT Intended As
 
@@ -61,6 +62,7 @@ This project is the web presentation layer for HARD.CORE and currently includes 
 - Clientes
 - Perfiles
 - Usuarios
+- **Mensajes**
 
 The frontend consumes API responses using the envelope contract:
 
@@ -251,7 +253,7 @@ Recommended enhancement:
 
 Entities implemented in UI:
 
-- Empresa, Menu, Cliente, Perfil, Usuario
+- Empresa, Menu, Cliente, Perfil, Usuario, **Mensajes**
 
 ---
 
